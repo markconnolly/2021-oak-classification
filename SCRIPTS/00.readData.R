@@ -1,5 +1,7 @@
 ## read in tree and aux data
 
+setwd("~/GitHub/2021-oak-classification/WORKING")
+
 library(ape)
 library(openxlsx)
 library(magrittr)
