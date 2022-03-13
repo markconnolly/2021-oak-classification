@@ -1,10 +1,10 @@
-# 2021-oak-classification  
-[![DOI](https://zenodo.org/badge/336439401.svg)](https://zenodo.org/badge/latestdoi/336439401)
+# Cladogram for selected oaks native to the southeastern US
 
-Tree and maps for oak classification paper, Manos and Hipp  
+Derived from andrew-hipp/2021-oak-classification (https://github.com/andrew-hipp/2021-oak-classification)
+
+Modified to select native species found in the Southeastern United States as identified by sightings recorded in iNaturalist. The created cladogram presents only those species.  Minor tweaks to Andrew's code are documented in the scripts.
+
 To generate rough drafts of phylogeny and maps:
 
-1. Start R in `WORKING` directory
-2. Source scripts in numerical order
+1. Source scripts in numerical order
 
-Final publication figure was edited in Adobe Illustrator
