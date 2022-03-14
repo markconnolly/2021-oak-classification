@@ -6,6 +6,14 @@
 require(ggtree)   ### wmc
 require(ggplot2)
 require(dplyr)
+library(tidytree)
+
+tip.dat <- read.csv('DATA/tips.data.csv', row.names = 8, as.is = TRUE)
+row.names(tip.dat) <- gsub('_', ' ', row.names(tip.dat), fixed = T)
+tip.dat <- tip.dat[tr$tip.label, ]
+tip.dat$node <- tidytree::nodeid(tibble::as_tibble(tr), 
+                                 row.names(tip.dat))
+
 
 troubleshoot = F
 
@@ -44,10 +52,14 @@ barExtend = -0.2
 
 ## make base tree
 tr.plot <- full_join(tr, tip.dat, by = 'node')
-p <- ggtree(tr.plot, layout = 'fan', ladderize = FALSE,
-            open.angle = 180, size = 0.01)
-p <- p + geom_tiplab2(fontface='italic',
-                      size = 1.8,
+
+p <- ggtree(tr.plot, 
+            #layout = 'fan', 
+            ladderize = FALSE,
+            #open.angle = 180, 
+            size = 0.01)
+p <- p + geom_tiplab(fontface='italic',
+                      size = 2,
                       aes(color = NAm)
                     )
 p <- p + 
@@ -62,7 +74,7 @@ for(i in c('clade', 'subsection')) {
     if(troubleshoot) {
       offsetTemp <- offsetTemp + 3
     } else offsetTemp <- offsetLabel[i] + 2
-    mrcaNode <- getMRCA(tr, row.names(tip.dat)[which(tip.dat[[i]] == j)])
+    mrcaNode <- ape::getMRCA(tr, row.names(tip.dat)[which(tip.dat[[i]] == j)])
     p <- p + 
       geom_cladelabel(
         node = mrcaNode,
@@ -77,7 +89,7 @@ for(i in c('clade', 'subsection')) {
 
 
 
-pdf('../OUT/prettyTree.pdf', 12, 8)
+pdf('OUT/prettyTree.pdf', 12, 8)
   print(p)
 dev.off()
 

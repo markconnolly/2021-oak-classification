@@ -1,85 +1,47 @@
-## read in tree and aux data
-### wmc -- modified to generate tree of southeast US oaks
-### wmc -- todo: make this something that can be parameterized
+### code derived from https://github.com/andrew-hipp/2021-oak-classification
+### which has provided me with an excellent learning experience for Quercus
+### and for presenting cladograms
+###
+### modified to select Quercus species native to southeast US
+## 1. get the tree that represents all of the genus Quercus
+## 2. prune the tree to leave just those species identified as native to the southeast US
+## 3. normalize species labels (to be used as joining keys in the next script)
+## 4. capture work to presentation files
 
-setwd("~/GitHub/2021-oak-classification/WORKING")
+##   important output: the list tr
+##   tr defines the cladogram of the target oak species
+##   the attribute tr$tip.label contains normalized species name for each leaf on the tree
 
-library(ape)
-library(openxlsx)
+library(ape) # for reading and manipulating the tree structure
+library(stringr)
 library(magrittr)
-library(tidytree)
 
-### wmc -- adding libraries
-library(phytools)
-library(phylobase)
+# get the tree that represents all of Quercus
+# This is the critical data structure for the process.  The data structure 
+# is as-is from Hipp's repository.  The information contained represents
+# significant and exciting work by the collaboration related to Hipp's
+# repository output.  Rendering the cladogram as a plot is icing on a 
+# very large cake (I think the cake is made with acorn flour, BTW).
+tr <- ape::read.tree('DATA/tr.singletons.correlated.1.taxaGrepStem.tre')
 
-if(!exists('weldTaxa')) {
-  source('https://raw.githubusercontent.com/andrew-hipp/morton/master/R/weldTaxa.R')}
+
+# Prune the tree by keeping parts that contain those identified as southeast US oaks
+# The values in seoaks.csv were written from tr$tip.label to a cav file,
+# which was then edited by hand to remove unwanted species.  This preserved the original
+# values for the proper functioning of ape::keep.tip
+tr <- tr %>% 
+  ape::keep.tip((read.csv('DATA/seoaks.csv', header = T))$sp)
 
 
-### wmc -- removed from southeast oak processing
-# tr.gambeliiList <- data.frame(spliceTaxa = c('Quercus_lobata',
-#                                               'Quercus_arizonica',
-#                                               'Quercus_sinuata',
-#                                               'Quercus_marilandica',
-#                                               'Quercus_garryana'
-#                                             ),
-#                               spliceRule = rep('sister',5),
-#                               seqOrSplice = rep('** SPLICE **',5),
-#                               row.names = c('Quercus_gambelii',
-#                                             'Quercus_depressipes',
-#                                             'Quercus_sinuata_var._breviloba',
-#                                             'Quercus_marilandica_var._ashei',
-#                                             'Quercus_garryana_var._breweri'
-#                                           )
-#                             ) # close data.frame
+# normalize the label values to standard species name format
+tr$tip.label %>% 
+  stringr::str_extract("[^|]+") %>%
+  stringr::str_replace_all("_", " ") -> tr$tip.label
 
-## tip.dat.raw = original tip data from Hipp et al. 2020, New Phyt
-## tip.dat = edited from this tree, used for downstream analyses
 
-tr <- read.tree('../DATA/tr.singletons.correlated.1.taxaGrepStem.tre')
-writeLines(tr$tip.label, '../OUT/allTips.orig.txt')
-# tr <- drop.tip(tr, c("Quercus_arizonica|Mexico|Durango|2015003|QUE001258",
-#                      "Quercus_laeta|Mexico|Durango|2015040|QUE001294",
-#                      "Quercus_conzattii|Mexico|Oaxaca|JCB-MX-OA-TE-4|QUE000197"))
-
-### wmc -- keep the species found natively in the southeast US
-### wmc -- list derived as csv from original tr[["tip.label"]]
-seoaks <- (read.csv('../DATA/seoaks.csv', header = T))$sp
-tr <- keep.tip(tr, seoaks)
-
-tr$tip.label <- sapply(strsplit(tr$tip.label, '|', fixed = T), '[', 1)
-tip.dat.raw <- read.xlsx('../DATA/includeTips.2018-10-30-v2.xlsx', 1)
-tip.dat.raw$sp <- sapply(strsplit(tip.dat.raw$tip, '_|_', fixed = T), '[', 1)
-tip.dat.raw <- tip.dat.raw[which(tip.dat.raw$singleTip), ]
-
-message(paste('Proportion tree tips matching tip.dat.raw:', round(sum(tr$tip.label %in% tip.dat.raw$sp) / length(tr$tip.label), 2)))
-
-### wmc -- seems to be harmonizing the tree with what is in the spreadsheet elements
-### wmc -- I am hoping all the seoaks make it through (assertion met if things are good)
-tr <- drop.tip(tr, which(!tr$tip.label %in% tip.dat.raw$sp))
-tip.dat.raw <- tip.dat.raw[tip.dat.raw$sp %in% tr$tip.label, ]
-tip.dat.raw <- tip.dat.raw[!duplicated(tip.dat.raw$sp), ]
-tip.dat.raw <- tip.dat.raw[grep('Quercus', tip.dat.raw$subgenus), ]
-tr <- drop.tip(tr, setdiff(tr$tip.label, tip.dat.raw$sp))
-
-### wmc -- the taxa welding adds species not in the southeast (seemingly)
-### wmc -- so this step is removed
-# tr <- weldTaxa(tr = tr, taxa = tr.gambeliiList)
-
-tr$tip.label <- gsub('_', ' ', tr$tip.label, fixed = T)
-
-tr <- read.tree(text = write.tree(phytools::rotateNodes(tr, c(291, 293))))
-tr$tip.label <- gsub('_', ' ', tr$tip.label, fixed = T)
-# stop()
-tip.dat <- read.csv('../DATA/tips.data.csv', row.names = 8, as.is = TRUE)
-row.names(tip.dat) <- gsub('_', ' ', row.names(tip.dat), fixed = T)
-tr <- drop.tip(tr, row.names(tip.dat)[which(tip.dat$drop)])
-tip.dat <- tip.dat[tr$tip.label, ]
-tip.dat$node <- nodeid(as_tibble(tr), row.names(tip.dat))
-
-pdf('../OUT/tr.checkingNames.pdf', 8.5,15)
-plot(tr, cex = 0.5, tip.color = ifelse(tip.dat[tr$tip.label, 'NAm'], 'black', 'gray'))
+# print stuff to files
+pdf('OUT/verticalclades.pdf', 8.5,15)
+plot(tr, cex = 0.7)
 dev.off()
 
-writeLines(tr$tip.label, '../OUT/allTips.final.txt')
+writeLines(tr$tip.label, 'OUT/allTips.final.txt')
