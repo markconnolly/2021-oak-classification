@@ -1,6 +1,6 @@
 ### code derived from https://github.com/andrew-hipp/2021-oak-classification
 ### which has provided me with an excellent learning experience for Quercus
-### and for presenting cladograms
+### and for presenting phylograms
 ###
 ### modified to select Quercus species native to southeast US
 ## 1. get the tree that represents all of the genus Quercus
@@ -9,7 +9,7 @@
 ## 4. capture work to presentation files
 
 ##   important output: the list tr
-##   tr defines the cladogram of the target oak species
+##   tr defines the phylogram of the target oak species
 ##   the attribute tr$tip.label contains normalized species name for each leaf on the tree
 
 library(ape) # for reading and manipulating the tree structure
@@ -20,7 +20,7 @@ library(magrittr)
 # This is the critical data structure for the process.  The data structure 
 # is as-is from Hipp's repository.  The information contained represents
 # significant and exciting work by the collaboration related to Hipp's
-# repository output.  Rendering the cladogram as a plot is icing on a 
+# repository output.  Rendering the phylogram as a plot is icing on a 
 # very large cake (I think the cake is made with acorn flour, BTW).
 tr <- ape::read.tree('DATA/tr.singletons.correlated.1.taxaGrepStem.tre')
 
