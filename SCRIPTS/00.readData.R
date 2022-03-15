@@ -15,6 +15,7 @@
 library(ape) # for reading and manipulating the tree structure
 library(stringr)
 library(magrittr)
+library(TreeTools)
 
 # get the tree that represents all of Quercus
 # This is the critical data structure for the process.  The data structure 
@@ -24,13 +25,17 @@ library(magrittr)
 # very large cake (I think the cake is made with acorn flour, BTW).
 tr <- ape::read.tree('DATA/tr.singletons.correlated.1.taxaGrepStem.tre')
 
+# one time derive keys for tree pruning, keeping those for southeast Quercus
+# tr.label <- as.data.frame(tr$tip.label) 
+
 
 # Prune the tree by keeping parts that contain those identified as southeast US oaks
 # The values in seoaks.csv were written from tr$tip.label to a cav file,
 # which was then edited by hand to remove unwanted species.  This preserved the original
 # values for the proper functioning of ape::keep.tip
+seoaks <- read.csv('DATA/seoaks.csv', header = T)
 tr <- tr %>% 
-  ape::keep.tip((read.csv('DATA/seoaks.csv', header = T))$sp)
+  ape::keep.tip(seoaks$tip.key)
 
 
 # normalize the label values to standard species name format
