@@ -7,13 +7,25 @@ require(ggtree)   ### wmc
 require(ggplot2)
 require(dplyr)
 library(tidytree)
+library(TreeTools)
 
-tip.dat <- read.csv('DATA/tips.data.csv', row.names = 8, as.is = TRUE)
+tip.dat <- read.csv('DATA/tips.data.csv', 
+                    row.names = 8, 
+                    as.is = TRUE)
+
 row.names(tip.dat) <- gsub('_', ' ', row.names(tip.dat), fixed = T)
 tip.dat <- tip.dat[tr$tip.label, ]
 tip.dat$node <- tidytree::nodeid(tibble::as_tibble(tr), 
                                  row.names(tip.dat))
 
+
+### wmc -- for now, plot and pick the numbers to get desired 
+### subtree.  For later, figure out how to get node numbers
+### at a specific depth
+#plot(tr, cex = 0.5)
+#ape::nodelabels()
+whiteoaks <- TreeTools::Subtree(Preorder(tr), 37)
+redoaks   <- TreeTools::Subtree(Preorder(tr), 51)
 
 troubleshoot = F
 
@@ -51,15 +63,15 @@ offsetTemp <- min(offsetLabel)
 barExtend = -0.2
 
 ## make base tree
-tr.plot <- full_join(tr, tip.dat, by = 'node')
+tr.plot <- tidytree::full_join(tr, tip.dat, by = 'node')
 
 p <- ggtree(tr.plot, 
             #layout = 'fan', 
-            ladderize = FALSE,
+            ladderize = TRUE,
             #open.angle = 180, 
             size = 0.01)
 p <- p + geom_tiplab(fontface='italic',
-                      size = 2,
+                      size = 3,
                       aes(color = NAm)
                     )
 p <- p + 
@@ -81,15 +93,15 @@ for(i in c('clade', 'subsection')) {
         offset = offsetTemp,
         fontsize = cexLabel[i],
         barsize = lwdLabel[i],
-        label = j, color = colLab[j],
+        label = j, 
+        color = colLab[j],
         extend = barExtend
       ) # close geom_cladelabel
   }
 }
 
 
-
-pdf('OUT/prettyTree.pdf', 12, 8)
+pdf('OUT/seoakstree.pdf', 12, 8)
   print(p)
 dev.off()
 
