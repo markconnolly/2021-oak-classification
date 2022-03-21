@@ -1,33 +1,35 @@
-Quercus margarettae
-Quercus chapmanii
-Quercus stellata
-Quercus alba
-Quercus michauxii
-Quercus bicolor
-Quercus lyrata
-Quercus macrocarpa
-Quercus muehlenbergii
-Quercus prinoides
-Quercus geminata
-Quercus virginiana
-Quercus minima
-Quercus incana
-Quercus hemisphaerica
-Quercus inopina
-Quercus myrtifolia
-Quercus laevis
-Quercus nigra
-Quercus elliottii
-Quercus phellos
-Quercus laurifolia
-Quercus falcata
-Quercus marilandica
-Quercus pagoda
-Quercus imbricaria
-Quercus georgiana
-Quercus ilicifolia
-Quercus shumardii
-Quercus rubra
-Quercus velutina
-Quercus coccinea
-Quercus palustris
+Quercus margarettae, sand post oak
+Quercus chapmanii, Chapman oak
+Quercus stellata, post oak
+Quercus sinuata, bastard oak
+Quercus alba, white oak
+Quercus michauxii, swamp chestnut oak
+Quercus montana, chestnut oak
+Quercus bicolor, swamp white oak
+Quercus lyrata, overcup oak
+Quercus macrocarpa, bur oak
+Quercus muehlenbergii, chinquapin oak
+Quercus prinoides, dwarf chinquapin oak
+Quercus geminata, sand live oak
+Quercus virginiana, live oak
+Quercus minima, dwarf live oak
+Quercus incana, bluejack oak
+Quercus hemisphaerica, Darlington oak
+Quercus inopina, sandhill oak
+Quercus myrtifolia, myrtle oak
+Quercus laevis, turkey oak
+Quercus nigra, water oak
+Quercus elliottii, running oak
+Quercus phellos, willow oak
+Quercus laurifolia, laurel oak
+Quercus falcata, southern red oak
+Quercus marilandica, blackjack oak
+Quercus pagoda, cherrybark oak
+Quercus imbricaria, shingle oak
+Quercus georgiana, Georgia oak
+Quercus ilicifolia, bear oak
+Quercus shumardii, Shumard's oak
+Quercus rubra, northern red oak
+Quercus velutina, black oak
+Quercus coccinea, scarlet oak
+Quercus palustris, pin oak

@@ -16,6 +16,10 @@ library(ape) # for reading and manipulating the tree structure
 library(stringr)
 library(magrittr)
 library(TreeTools)
+require(ggtree)   ### wmc
+require(ggplot2)
+require(dplyr)
+library(tidytree)
 
 # get the tree that represents all of Quercus
 # This is the critical data structure for the process.  The data structure 
@@ -38,10 +42,51 @@ tr <- tr %>%
   ape::keep.tip(seoaks$tip.key)
 
 
-# normalize the label values to standard species name format
+# extract the species name for the label
 tr$tip.label %>% 
   stringr::str_extract("[^|]+") %>%
   stringr::str_replace_all("_", " ") -> tr$tip.label
+
+
+tip.dat <- read.csv('DATA/tips.data.csv', 
+                    as.is = TRUE)
+tip.dat$sp <- tip.dat$sp %>% 
+              gsub('_', ' ', ., fixed = T)
+row.names(tip.dat) <- tip.dat$sp  #  hmm about the row names
+tip.dat <- tip.dat[tr$tip.label, ]
+tip.dat$node <- tidytree::nodeid(tibble::as_tibble(tr), 
+                                 row.names(tip.dat))
+
+seoaks <- dplyr::left_join(seoaks, select(tip.dat, subgenus, section, subsection, clade, sp), by = "sp")
+
+whiteoakspecies <- filter(seoaks, section == "Virentes" | section == "Quercus") %>%
+  select(sp)
+
+whiteoaktree <- tr %>% 
+  ape::keep.tip(whiteoakspecies$sp)
+
+plot(whiteoaktree)
+
+redoakspecies <- filter(seoaks, section == "Lobatae") %>%
+  select(sp)
+
+redoaktree <- tr %>% 
+  ape::keep.tip(redoakspecies$sp)
+
+plot(redoaktree)
+
+
+### add the common name to the tip label species name
+### the common name comes from seoaks
+### may cause downstream issues   
+# tr$tip.label <- unlist(tr$tip.label %>% 
+#                          lapply( function(species) {
+#                                    paste(species, 
+#                                          (filter(seoaks, sp == species) %>% select(cn)), 
+#                                          sep = ", ")
+#                                  }
+#                                )
+#                       )
 
 
 # print stuff to files
