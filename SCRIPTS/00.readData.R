@@ -57,23 +57,17 @@ tip.dat <- tip.dat[tr$tip.label, ]
 tip.dat$node <- tidytree::nodeid(tibble::as_tibble(tr), 
                                  row.names(tip.dat))
 
-seoaks <- dplyr::left_join(seoaks, select(tip.dat, subgenus, section, subsection, clade, sp), by = "sp")
+seoaks <- dplyr::left_join(seoaks, 
+                           select(tip.dat, subgenus, section, subsection, clade, sp), 
+                           by = "sp")
 
-whiteoakspecies <- filter(seoaks, section == "Virentes" | section == "Quercus") %>%
-  select(sp)
+whiteoakspecies <- (filter(seoaks, section %in% c("Virentes", "Quercus")) %>%
+  select(sp))[[1]]
 
-whiteoaktree <- tr %>% 
-  ape::keep.tip(whiteoakspecies$sp)
+redoakspecies <- (filter(seoaks, section %in% c("Lobatae")) %>%
+  select(sp))[[1]]
 
-plot(whiteoaktree)
-
-redoakspecies <- filter(seoaks, section == "Lobatae") %>%
-  select(sp)
-
-redoaktree <- tr %>% 
-  ape::keep.tip(redoakspecies$sp)
-
-plot(redoaktree)
+woplot <- labeledtree(whiteoakspecies)
 
 
 ### add the common name to the tip label species name
@@ -93,5 +87,3 @@ plot(redoaktree)
 pdf('OUT/verticalclades.pdf', 8.5,15)
 plot(tr, cex = 0.7)
 dev.off()
-
-writeLines(tr$tip.label, 'OUT/allTips.final.txt')
