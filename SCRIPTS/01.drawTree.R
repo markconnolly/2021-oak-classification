@@ -9,9 +9,13 @@ require(dplyr)
 library(tidytree)
 library(TreeTools)
 
-labeledtreeplot <- function(tr, oakgroup) {
-  oaktree <- tr %>% 
-    ape::keep.tip(oakgroup)
+labeledtreeplot <- function(phylotree, 
+                            specieslist,
+                            tr.dat,
+                            cladelevels = c('clade', 'subsection', 'section')
+                            ) {
+  phylotree <- phylotree %>% 
+    ape::keep.tip(specieslist)
   
   lwdLabel = c(clade = 1, subsection = 1, section = 1)
   cexLabel = c(clade = 2, 
@@ -48,7 +52,7 @@ labeledtreeplot <- function(tr, oakgroup) {
   barExtend = -0.2
   
   
-  p <- ggtree(oaktree,
+  p <- ggtree(phylotree,
               #layout = 'fan', 
               ladderize = F,
               #open.angle = 180, 
@@ -60,8 +64,8 @@ labeledtreeplot <- function(tr, oakgroup) {
   
   
   ## add clade labels across the grouped species
-  for(i in c('clade', 'subsection', 'section')) {
-    for(j in unique(filter(seoaks, sp %in% oakgroup)[[i]])) {
+  for(i in cladelevels) {
+    for(j in unique(filter(tr.dat, sp %in% specieslist)[[i]])) {
       if((j == "") | (is.na(j))) {
         message(paste("skipping, j = ", j))
         next
@@ -69,11 +73,13 @@ labeledtreeplot <- function(tr, oakgroup) {
       
       message(paste('doing i =', i, "; j =", j))
       
-      mrcaNode <-                                     # get shared node identity for the species grouping,
-        ape::getMRCA(oaktree,                         # used to add clade line label along species labels
-                     seoaks %>%
+      
+      # get the most recent common ancestor of a collection of species
+      mrcaNode <-
+        ape::getMRCA(phylotree,
+                     tr.dat %>%
                        dplyr::filter(.data[[i]] == j) %>% 
-                       .$sp)
+                       pull(sp))
       
       p <- p +
         geom_cladelabel(

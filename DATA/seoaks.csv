@@ -1,36 +1,36 @@
-sp,cn,tip.key
-Quercus alba,white oak,Quercus_alba|USA|MI|IL-MOR-MH086|QUE000128
-Quercus bicolor,swamp white oak,Quercus_bicolor|USA|NY|PM-96|QUE000756
-Quercus chapmanii,Chapman oak,Quercus_chapmanii|USA|FL|IL-SH-137|QUE000810
-Quercus coccinea,scarlet oak,Quercus_coccinea|USA|IL|JW2604|QUE000153
-Quercus elliottii,running oak,Quercus_elliottii|USA|FL|JCB-US-FL-SF-ET-2|QUE000193
-Quercus falcata,southern red oak,Quercus_falcata|USA|FL|JCB-US-FL-SF-FA-1|QUE000183
-Quercus geminata,sand live oak,Quercus_geminata|USA|FL|FLAB109|QUE000869
-Quercus georgiana,Georgia oak,Quercus_georgiana|USA|GA|IL-MOR-MH221|QUE001055
-Quercus hemisphaerica,Darlington oak,Quercus_hemisphaerica|USA|NC|PM-178|QUE001151
-Quercus ilicifolia,bear oak,Quercus_ilicifolia|USA|NY|PM-80|QUE000740
-Quercus imbricaria,shingle oak,Quercus_imbricaria|USA|IL|IL-MOR-MH088_|QUE000130
-Quercus incana,bluejack oak,Quercus_incana|USA|MS|PM-104|QUE000764
-Quercus inopina,sandhill oak,Quercus_inopina|USA|FL|JCB-US-FL-AB-IP-2|QUE000186
-Quercus laevis,turkey oak,Quercus_laevis|USA|NC|PM-179|QUE001152
-Quercus laurifolia,laurel oak,Quercus_laurifolia|USA|FL|JCB-US-FL-SF-LA-1|QUE000187
-Quercus lyrata,overcup oak,Quercus_lyrata|USA|GA|IL-MOR-MH078_|QUE000120
-Quercus macrocarpa,bur oak,Quercus_macrocarpa|USA|IL|IL-MOR-MH003_A.B|QUE000107
-Quercus margarettae,sand post oak,Quercus_margarettae|USA|TX|CA-DAV-MH50|QUE000323
-Quercus marilandica,blackjack oak,Quercus_marilandica|USA|MO|IL-MOR-MH012_|QUE000116
-Quercus michauxii,swamp chestnut oak,Quercus_michauxii|USA|MO|IL-MOR-MH001_|QUE000105
-Quercus minima,dwarf live oak,Quercus_minima|USA|FL|FLMO62|QUE000873
-Quercus montana,chestnut oak,Quercus_montana|USA|NC|IL-SH-116|QUE000576
-Quercus muehlenbergii,chinquapin oak,Quercus_muehlenbergii|USA|TX|CA-DAV-MH49|QUE000322
-Quercus myrtifolia,myrtle oak,Quercus_myrtifolia|USA|FL|JCB-US-FL-AB-MY-2|QUE000191
-Quercus nigra,water oak,Quercus_nigra|USA|NC|PM-147|QUE001120
-Quercus pagoda,cherrybark oak,Quercus_pagoda|USA|IN|IL-MOR-MH002_A.B|QUE000106
-Quercus palustris,pin oak,Quercus_palustris|USA|IL|IL-MOR-MH004_|QUE000108
-Quercus phellos,willow oak,Quercus_phellos|USA|IL|IL-SH-156|QUE000590
-Quercus prinoides,dwarf chinquapin oak,Quercus_prinoides|USA|NE|IL-SH-96|QUE000678
-Quercus rubra,northern red oak,Quercus_rubra|USA|IL|IL-MOR-MH085|QUE000127
-Quercus shumardii,Shumard's oak,Quercus_shumardii|USA|OK|IL-SH-111|QUE000571
-Quercus sinuata,bastard oak,Quercus_sinuata|USA|TX|CA-DAV-MH17|QUE000290
-Quercus stellata,post oak,Quercus_stellata|USA|NC|PM-11|QUE000692
-Quercus velutina,black oak,Quercus_velutina|USA|IL|IL-MOR-MH076|QUE000118
-Quercus virginiana,live oak,Quercus_virginiana|USA|FL|FLBA140|QUE000876
+sp,cn
+Quercus alba,white oak
+Quercus bicolor,swamp white oak
+Quercus chapmanii,Chapman oak
+Quercus coccinea,scarlet oak
+Quercus elliottii,running oak
+Quercus falcata,southern red oak
+Quercus geminata,sand live oak
+Quercus georgiana,Georgia oak
+Quercus hemisphaerica,Darlington oak
+Quercus ilicifolia,bear oak
+Quercus imbricaria,shingle oak
+Quercus incana,bluejack oak
+Quercus inopina,sandhill oak
+Quercus laevis,turkey oak
+Quercus laurifolia,laurel oak
+Quercus lyrata,overcup oak
+Quercus macrocarpa,bur oak
+Quercus margarettae,sand post oak
+Quercus marilandica,blackjack oak
+Quercus michauxii,swamp chestnut oak
+Quercus minima,dwarf live oak
+Quercus montana,chestnut oak
+Quercus muehlenbergii,chinquapin oak
+Quercus myrtifolia,myrtle oak
+Quercus nigra,water oak
+Quercus pagoda,cherrybark oak
+Quercus palustris,pin oak
+Quercus phellos,willow oak
+Quercus prinoides,dwarf chinquapin oak
+Quercus rubra,northern red oak
+Quercus shumardii,Shumard's oak
+Quercus sinuata,bastard oak
+Quercus stellata,post oak
+Quercus velutina,black oak
+Quercus virginiana,live oak
