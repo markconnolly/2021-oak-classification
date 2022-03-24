@@ -12,51 +12,26 @@ library(TreeTools)
 labeledtreeplot <- function(phylotree, 
                             specieslist,
                             tr.dat,
-                            cladelevels = c('clade', 'subsection', 'section')
+                            label_ranks = c('clade', 'subsection', 'section')
                             ) {
   phylotree <- phylotree %>% 
     ape::keep.tip(specieslist)
   
-  lwdLabel = c(clade = 1, subsection = 1, section = 1)
-  cexLabel = c(clade = 2, 
-               subsection = 2, 
-               section = 3)
-  colLab <- c(Lobatae = 'red3', 
-              Quercus = 'black',
-              Protobalanus = 'gray20', 
-              Ponticae = 'gray20', 
-              Virentes = 'gray20',
-              
-              ## now red oak subsections
-              Agrifoliae = 'red',
-              Palustres = 'red',
-              Phellos = 'red',
-              Coccineae = 'red',
-              
-              ## ... and white oak subsections
-              Dumosae = 'gray20',
-              Albae = 'gray20',
-              Prinoideae = 'gray20',
-              Stellatae = 'gray20',
-              Polymorphae = 'gray20',
-              
-              ### ... and informal clades
-              'TX red oaks' = 'red',
-              'Erythromexicana [in part]' = 'red',
-              'Roburoids [in part]' = 'gray20',
-              'Leucomexicana [in part]' = 'gray20'
-              )
+  linethickness = c(clade = 1, subsection = 1.1, section = 1.2)
+  cladelabelsize = c(clade = 2.5, 
+                     subsection = 2.5, 
+                     section = 3)
   
   offsetLabel = c(clade = 10, subsection = 15, section = 20)
-  offsetTemp <- min(offsetLabel)
-  barExtend = -0.2
+  barExtend = 0.1 #-0.2 for fan?
   
   
   p <- ggtree(phylotree,
-              #layout = 'fan', 
+              layout = "rectangular", #'fan', 
               ladderize = F,
-              #open.angle = 180, 
-              size = 0.01)         +
+              open.angle = 180, # limits fan extent, otherwise does nothing
+              size = 0.01
+              )         +
     geom_tiplab(fontface='italic',
                 size = 3)          +
     theme(legend.position='none')  +
@@ -64,7 +39,7 @@ labeledtreeplot <- function(phylotree,
   
   
   ## add clade labels across the grouped species
-  for(i in cladelevels) {
+  for(i in label_ranks) {
     for(j in unique(filter(tr.dat, sp %in% specieslist)[[i]])) {
       if((j == "") | (is.na(j))) {
         message(paste("skipping, j = ", j))
@@ -80,15 +55,14 @@ labeledtreeplot <- function(phylotree,
                      tr.dat %>%
                        dplyr::filter(.data[[i]] == j) %>% 
                        pull(sp))
-      
+      message(paste("mrcaNode:", mrcaNode))
       p <- p +
         geom_cladelabel(
           node = mrcaNode,
           offset = offsetLabel[i],
-          fontsize = cexLabel[i],
-          barsize = lwdLabel[i],
+          fontsize = cladelabelsize[i],
+          barsize = linethickness[i],
           label = j,
-          color = colLab[j],
           extend = barExtend
         ) # close geom_cladelabel
     }
